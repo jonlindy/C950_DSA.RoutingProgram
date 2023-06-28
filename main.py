@@ -4,7 +4,12 @@ from package import *
 
 load_packagedata()
 
-newpackage = packageHT[3]
-print(newpackage)
+#print(packageHT.search('15').address)
 
-print("Hello GitHub!")
+#for i in range(1, 40):
+ #   print(type(packageHT.search(str(i))))
+
+print(packageHT.table[4][0][1].address)
+
+
+

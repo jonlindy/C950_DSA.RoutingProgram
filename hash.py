@@ -2,16 +2,18 @@
 
 class ChainedHashTable:
     # constructor with capacity parameter. All buckets get an empty list
-    def __init__(self,  initial_capacity=8):
+    def __init__(self, initial_capacity=10):
         # initialize hash table with empty buckets.
         self.table = []
         for i in range(initial_capacity):
             self.table.append([])
-
+    total_bucket_list = []
     # Insert new item into hash table.
     def insert(self, key, item):
         # get bucket to put item.
         bucket = hash(key) % len(self.table)
+        print(bucket)
+
         bucket_list = self.table[bucket]
 
         # update key if already present.
@@ -50,3 +52,4 @@ class ChainedHashTable:
         for kv in bucket_list:
             if kv[0] == key:
                 bucket_list.remove([kv[0],kv[1]])
+                print("Removed from bucket")

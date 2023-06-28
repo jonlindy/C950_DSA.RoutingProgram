@@ -14,6 +14,11 @@ class Package:
         self.weight = weight
         self.status = status
 
+    def __str__ (self):
+        return "%s, %s, %s, %s, %s, %s, %s, %s, %s" % (self.package_id, self.address, self.city, self.state, self.zip,
+                                                      self.delivery_deadline, self.weight, self.status, self.notes)
+
+
 # method to load package data into hashtable from CSV
 def load_packagedata():
     with open("WGUPS_package.csv", 'r') as infile:
@@ -29,7 +34,7 @@ def load_packagedata():
             delivery_deadline = row[5]
             weight = row[6]
             notes = row[7]
-            status = 'Processing'
+            status = 'At Hub'
 
             package = Package(package_id, address, city, state, zip, delivery_deadline, weight, notes, status)
 
