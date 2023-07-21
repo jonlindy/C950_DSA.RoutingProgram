@@ -3,7 +3,9 @@ from hash import ChainedHashTable
 
 class Package:
     # constructor
-    def __init__(self, package_id, address, city, state, zip, delivery_deadline, weight, notes, status):
+    def __init__(self, package_id, address, city, state, zip, delivery_deadline, weight, notes, status, depart_time, deliver_time):
+        self.deliver_time = deliver_time
+        self.depart_time = depart_time
         self.notes = notes
         self.package_id = package_id
         self.address = address
@@ -14,31 +16,17 @@ class Package:
         self.weight = weight
         self.status = status
 
+
     def __str__ (self):
-        return "%s, %s, %s, %s, %s, %s, %s, %s, %s" % (self.package_id, self.address, self.city, self.state, self.zip,
-                                                      self.delivery_deadline, self.weight, self.status, self.notes)
+        return "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % (self.package_id, self.address, self.city, self.state, self.zip,
+                                                      self.delivery_deadline, self.weight, self.status, self.notes, self.depart_time, self.deliver_time)
 
 
-# method to load package data into hashtable from CSV
-def load_packagedata():
-    with open("WGUPS_package.csv", 'r') as infile:
-        reader = csv.reader(infile, delimiter=",")
 
-        # read each line into new package object
-        for row in reader:
-            package_id = row[0]
-            address = row[1]
-            city = row[2]
-            state = row[3]
-            zip = row[4]
-            delivery_deadline = row[5]
-            weight = row[6]
-            notes = row[7]
-            status = 'At Hub'
-
-            package = Package(package_id, address, city, state, zip, delivery_deadline, weight, notes, status)
-
-            packageHT.insert(package_id, package)
-
-packageHT = ChainedHashTable()
-
+    def status_update(self, datetime):
+        if (datetime < self.depart_time):
+            self.status = "at the hub"
+        elif (datetime > self.deliver_time):
+            self.status = f"Delivered at {self.deliver_time}"
+        else:
+            self.status = "en route"
